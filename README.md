@@ -71,7 +71,7 @@ Mottu.Api/
 1. **Clonar o repositório**
 
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/FelipeOrikasa/challenge-dotnet.git
 cd projeto_final_sprint4
 ```
 
