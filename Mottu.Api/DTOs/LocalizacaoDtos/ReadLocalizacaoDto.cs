@@ -23,8 +23,8 @@ namespace Mottu.Api.DTOs.LocalizacaoDtos
         /// <summary>
         /// ID da moto que foi localizada.
         /// </summary>
-        /// <example>501</example>
-        public int MotoId { get; set; }
+        /// <example>550e8400-e29b-41d4-a716-446655440000</example>
+        public Guid MotoId { get; set; }
 
         /// <summary>
         /// Placa da moto localizada (dado "achatado").

@@ -1,55 +1,29 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Mottu.Api.Models
+using System.ComponentModel.DataAnnotations;
+
+namespace Mottu.Api.Models.Entities
 {
-    /// <summary>
-    /// Representa um pátio, que pertence a uma filial e pode conter motos e sensores.
-    /// Corresponde à tabela 'Patio' no banco de dados.
-    /// </summary>
+    // Representa um pátio de armazenamento dentro de uma filial.
     public class Patio
     {
-        /// <summary>
-        /// Identificador único do pátio (Chave Primária).
-        /// </summary>
-        /// <example>10</example>
         [Key]
-        public int PatioId { get; set; }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// Nome descritivo do pátio.
-        /// </summary>
-        /// <example>Pátio A - Motos de Baixa Cilindrada</example>
-        [Required(ErrorMessage = "O nome do pátio é obrigatório.")]
-        [StringLength(100, ErrorMessage = "O nome do pátio não pode exceder 100 caracteres.")]
-        public string NomePatio { get; set; } = null!;
+        [Required(ErrorMessage = "O nome do pátio é obrigatório")]
+        [MaxLength(100)]
+        public required string NomePatio { get; set; } // Propriedade que o AutoMapper busca (no mapeamento de Localizacao/Sensor).
 
-        // --- Relacionamento com Filial (Muitos-para-Um) ---
+        [Required(ErrorMessage = "A capacidade é obrigatória")]
+        public int CapacidadeMaxima { get; set; }
 
-        /// <summary>
-        /// Chave estrangeira que referencia a Filial à qual este pátio pertence.
-        /// </summary>
-        /// <example>1</example>
+        // Chave estrangeira para Filial
         public int FilialId { get; set; }
 
-        /// <summary>
-        /// Propriedade de navegação para a Filial. Permite o acesso
-        /// aos dados da filial a partir de um objeto Pátio.
-        /// </summary>
-        [ForeignKey("FilialId")]
-        public Filial Filial { get; set; } = null!;
+        // Propriedade de navegação para Filial (ESSENCIAL para o AutoMapper)
+        public required Filial Filial { get; set; }
 
-        // --- Outras Propriedades de Navegação (Um-para-Muitos) ---
-
-        /// <summary>
-        /// Coleção de motos estacionadas neste pátio.
-        /// </summary>
-        public ICollection<Moto> Motos { get; set; } = new List<Moto>();
-
-        /// <summary>
-        /// Coleção de sensores instalados neste pátio.
-        /// </summary>
-        public ICollection<Sensor> Sensores { get; set; } = new List<Sensor>();
+        // Propriedades de navegação para Moto e Sensor
+        public ICollection<Moto>? Motos { get; set; }
+        public ICollection<Sensor>? Sensores { get; set; }
     }
 }

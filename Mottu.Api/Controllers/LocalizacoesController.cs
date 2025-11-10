@@ -27,7 +27,7 @@ namespace Mottu.Api.Controllers
         /// <response code="200">Retorna a lista paginada de registros de localização.</response>
         [HttpGet("motos/{motoId}/localizacoes")]
         [ProducesResponseType(typeof(PagedResult<ReadLocalizacaoDto>), 200)]
-        public async Task<IActionResult> GetAllByMoto(int motoId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetAllByMoto(Guid motoId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             var result = await _localizacaoService.GetAllByMotoPaginatedAsync(motoId, pageNumber, pageSize);
             result.Items.ForEach(AddHateoasLinks);
@@ -43,7 +43,7 @@ namespace Mottu.Api.Controllers
         [HttpGet("localizacoes/{id}")]
         [ProducesResponseType(typeof(ReadLocalizacaoDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var dto = await _localizacaoService.GetByIdAsync(id);
             if (dto == null) return NotFound();
@@ -84,7 +84,7 @@ namespace Mottu.Api.Controllers
         [HttpDelete("localizacoes/{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

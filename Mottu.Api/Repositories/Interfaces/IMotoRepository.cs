@@ -1,4 +1,4 @@
-using Mottu.Api.Models;
+using Mottu.Api.Models.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,7 +21,7 @@ namespace Mottu.Api.Repositories.Interfaces
         /// </summary>
         /// <param name="id">O ID da moto.</param>
         /// <returns>A moto encontrada ou nulo se não existir.</returns>
-        Task<Moto?> GetByIdAsync(int id);
+        Task<Moto?> GetByIdAsync(Guid id);
 
         /// <summary>
         /// Busca uma moto pela sua placa de forma assíncrona.

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Mottu.Api.Data;
-using Mottu.Api.Models;
+using Mottu.Api.Models.Entities;
 using Mottu.Api.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace Mottu.Api.Repositories
             // Inclui os dados do Pátio relacionado para que o objeto venha completo.
             return await _context.Sensores
                 .Include(s => s.Patio)
-                .FirstOrDefaultAsync(s => s.SensorId == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<IEnumerable<Sensor>> GetAllByPatioPaginatedAsync(int patioId, int pageNumber, int pageSize)

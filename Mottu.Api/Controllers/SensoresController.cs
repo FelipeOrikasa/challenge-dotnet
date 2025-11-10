@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Mottu.Api.DTOs.SensorDtos;
 using Mottu.Api.DTOs.Shared;
 using Mottu.Api.Services.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mottu.Api.Controllers
@@ -29,9 +31,38 @@ namespace Mottu.Api.Controllers
         [ProducesResponseType(typeof(PagedResult<ReadSensorDto>), 200)]
         public async Task<IActionResult> GetAllByPatio(int patioId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var result = await _sensorService.GetAllByPatioPaginatedAsync(patioId, pageNumber, pageSize);
-            result.Items.ForEach(AddHateoasLinks);
-            return Ok(result);
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"SensoresController.GetAllByPatio: Endpoint chamado - patioId: {patioId}, pageNumber: {pageNumber}, pageSize: {pageSize}");
+                Console.WriteLine($"SensoresController.GetAllByPatio: Endpoint chamado - patioId: {patioId}, pageNumber: {pageNumber}, pageSize: {pageSize}");
+                
+                var result = await _sensorService.GetAllByPatioPaginatedAsync(patioId, pageNumber, pageSize);
+                
+                System.Diagnostics.Debug.WriteLine($"SensoresController.GetAllByPatio: Result.Items.Count: {result.Items.Count}, TotalCount: {result.TotalCount}");
+                Console.WriteLine($"SensoresController.GetAllByPatio: Result.Items.Count: {result.Items.Count}, TotalCount: {result.TotalCount}");
+                
+                if (result.Items.Count > 0)
+                {
+                    var primeiro = result.Items.First();
+                    System.Diagnostics.Debug.WriteLine($"SensoresController.GetAllByPatio: Primeiro sensor - Id: {primeiro.SensorId}, Descricao: {primeiro.Descricao}");
+                    Console.WriteLine($"SensoresController.GetAllByPatio: Primeiro sensor - Id: {primeiro.SensorId}, Descricao: {primeiro.Descricao}");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("SensoresController.GetAllByPatio: Items é vazio");
+                    Console.WriteLine("SensoresController.GetAllByPatio: Items é vazio");
+                }
+                
+                result.Items.ForEach(AddHateoasLinks);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SensoresController.GetAllByPatio: ERRO - {ex.Message}");
+                Console.WriteLine($"SensoresController.GetAllByPatio: ERRO - {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return StatusCode(500, new { error = ex.Message });
+            }
         }
 
         /// <summary>

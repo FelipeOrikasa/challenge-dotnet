@@ -17,51 +17,145 @@ namespace Mottu.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Mottu.Api.Models.Filial", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Entregador", b =>
                 {
-                    b.Property<int>("FilialId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<string>("CNH")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("NVARCHAR2(20)");
+
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasMaxLength(18)
+                        .HasColumnType("NVARCHAR2(18)");
+
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("TIMESTAMP(7)");
+
+                    b.Property<string>("ImagemCNH")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("NVARCHAR2(150)");
+
+                    b.Property<string>("TipoCNH")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("NVARCHAR2(2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CNH")
+                        .IsUnique();
+
+                    b.HasIndex("CNPJ")
+                        .IsUnique();
+
+                    b.ToTable("Entregadores");
+                });
+
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Filial", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FilialId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Cidade")
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                    b.Property<string>("Endereco")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("NVARCHAR2(200)");
 
                     b.Property<string>("NomeFilial")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("NVARCHAR2(100)");
 
-                    b.HasKey("FilialId");
+                    b.HasKey("Id");
 
                     b.ToTable("Filiais");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Localizacao", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Locacao", b =>
                 {
-                    b.Property<int>("LocalizacaoId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("RAW(16)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocalizacaoId"));
+                    b.Property<decimal>("CustoDiarioContratado")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<DateTime>("DataHora")
+                    b.Property<decimal>("CustoFinal")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("CustoTotalPrevisto")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime>("DataInicio")
                         .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<int>("MotoId")
+                    b.Property<DateTime?>("DataTerminoEfetiva")
+                        .HasColumnType("TIMESTAMP(7)");
+
+                    b.Property<DateTime>("DataTerminoPrevista")
+                        .HasColumnType("TIMESTAMP(7)");
+
+                    b.Property<int>("DiasContratados")
                         .HasColumnType("NUMBER(10)");
+
+                    b.Property<Guid>("EntregadorId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid>("MotoId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntregadorId");
+
+                    b.HasIndex("MotoId");
+
+                    b.ToTable("Locacoes");
+                });
+
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Localizacao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<decimal>("Latitude")
+                        .HasColumnType("decimal(10, 8)");
+
+                    b.Property<decimal>("Longitude")
+                        .HasColumnType("decimal(11, 8)");
+
+                    b.Property<Guid?>("MotoId")
+                        .HasColumnType("RAW(16)");
 
                     b.Property<int>("SensorId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("LocalizacaoId");
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("TIMESTAMP(7)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("MotoId");
 
@@ -70,13 +164,11 @@ namespace Mottu.Api.Migrations
                     b.ToTable("Localizacoes");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Moto", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Moto", b =>
                 {
-                    b.Property<int>("MotoId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MotoId"));
+                        .HasColumnType("RAW(16)");
 
                     b.Property<int>("Ano")
                         .HasColumnType("NUMBER(10)");
@@ -86,15 +178,15 @@ namespace Mottu.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("NVARCHAR2(100)");
 
-                    b.Property<int>("PatioId")
+                    b.Property<int?>("PatioId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Placa")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("NVARCHAR2(20)");
+                        .HasMaxLength(10)
+                        .HasColumnType("NVARCHAR2(10)");
 
-                    b.HasKey("MotoId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PatioId");
 
@@ -104,13 +196,16 @@ namespace Mottu.Api.Migrations
                     b.ToTable("Motos");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Patio", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Patio", b =>
                 {
-                    b.Property<int>("PatioId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatioId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CapacidadeMaxima")
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("FilialId")
                         .HasColumnType("NUMBER(10)");
@@ -120,105 +215,128 @@ namespace Mottu.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("NVARCHAR2(100)");
 
-                    b.HasKey("PatioId");
+                    b.HasKey("Id");
 
                     b.HasIndex("FilialId");
 
                     b.ToTable("Patios");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Sensor", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Sensor", b =>
                 {
-                    b.Property<int>("SensorId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SensorId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Ativo")
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Descricao")
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("NVARCHAR2(150)");
 
                     b.Property<int>("PatioId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("SensorId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PatioId");
 
                     b.ToTable("Sensores");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Localizacao", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Locacao", b =>
                 {
-                    b.HasOne("Mottu.Api.Models.Moto", "Moto")
-                        .WithMany("Localizacoes")
-                        .HasForeignKey("MotoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Mottu.Api.Models.Entities.Entregador", "Entregador")
+                        .WithMany("Locacoes")
+                        .HasForeignKey("EntregadorId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mottu.Api.Models.Sensor", "Sensor")
+                    b.HasOne("Mottu.Api.Models.Entities.Moto", "Moto")
+                        .WithMany()
+                        .HasForeignKey("MotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Entregador");
+
+                    b.Navigation("Moto");
+                });
+
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Localizacao", b =>
+                {
+                    b.HasOne("Mottu.Api.Models.Entities.Moto", null)
+                        .WithMany("Localizacoes")
+                        .HasForeignKey("MotoId");
+
+                    b.HasOne("Mottu.Api.Models.Entities.Sensor", "Sensor")
                         .WithMany("Localizacoes")
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Moto");
-
                     b.Navigation("Sensor");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Moto", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Moto", b =>
                 {
-                    b.HasOne("Mottu.Api.Models.Patio", "Patio")
+                    b.HasOne("Mottu.Api.Models.Entities.Patio", "Patio")
                         .WithMany("Motos")
                         .HasForeignKey("PatioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Patio");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Patio", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Patio", b =>
                 {
-                    b.HasOne("Mottu.Api.Models.Filial", "Filial")
+                    b.HasOne("Mottu.Api.Models.Entities.Filial", "Filial")
                         .WithMany("Patios")
                         .HasForeignKey("FilialId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Filial");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Sensor", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Sensor", b =>
                 {
-                    b.HasOne("Mottu.Api.Models.Patio", "Patio")
+                    b.HasOne("Mottu.Api.Models.Entities.Patio", "Patio")
                         .WithMany("Sensores")
                         .HasForeignKey("PatioId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Patio");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Filial", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Entregador", b =>
+                {
+                    b.Navigation("Locacoes");
+                });
+
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Filial", b =>
                 {
                     b.Navigation("Patios");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Moto", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Moto", b =>
                 {
                     b.Navigation("Localizacoes");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Patio", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Patio", b =>
                 {
                     b.Navigation("Motos");
 
                     b.Navigation("Sensores");
                 });
 
-            modelBuilder.Entity("Mottu.Api.Models.Sensor", b =>
+            modelBuilder.Entity("Mottu.Api.Models.Entities.Sensor", b =>
                 {
                     b.Navigation("Localizacoes");
                 });

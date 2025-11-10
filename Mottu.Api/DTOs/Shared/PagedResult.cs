@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mottu.Api.DTOs.Shared
 {
@@ -45,9 +46,9 @@ namespace Mottu.Api.DTOs.Shared
         /// <param name="totalCount">A contagem total de itens.</param>
         /// <param name="pageNumber">O número da página atual.</param>
         /// <param name="pageSize">O tamanho da página.</param>
-        public PagedResult(List<T> items, int totalCount, int pageNumber, int pageSize)
+        public PagedResult(IEnumerable<T> items, int totalCount, int pageNumber, int pageSize)
         {
-            Items = items;
+            Items = items.ToList();
             TotalCount = totalCount;
             PageNumber = pageNumber;
             PageSize = pageSize;

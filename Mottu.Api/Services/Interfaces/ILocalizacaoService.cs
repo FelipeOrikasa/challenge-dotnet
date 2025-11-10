@@ -22,7 +22,7 @@ namespace Mottu.Api.Services.Interfaces
         /// </summary>
         /// <param name="id">O ID do registro de localização.</param>
         /// <returns>O DTO do registro encontrado ou nulo.</returns>
-        Task<ReadLocalizacaoDto?> GetByIdAsync(int id);
+        Task<ReadLocalizacaoDto?> GetByIdAsync(Guid id);
 
         /// <summary>
         /// Busca o histórico de localizações de uma moto específica, de forma paginada.
@@ -31,12 +31,12 @@ namespace Mottu.Api.Services.Interfaces
         /// <param name="pageNumber">O número da página.</param>
         /// <param name="pageSize">O tamanho da página.</param>
         /// <returns>Um resultado paginado com os DTOs do histórico da moto.</returns>
-        Task<PagedResult<ReadLocalizacaoDto>> GetAllByMotoPaginatedAsync(int motoId, int pageNumber, int pageSize);
+        Task<PagedResult<ReadLocalizacaoDto>> GetAllByMotoPaginatedAsync(Guid motoId, int pageNumber, int pageSize);
 
         /// <summary>
         /// Remove um registro de localização (operação administrativa).
         /// </summary>
         /// <param name="id">O ID do registro a ser removido.</param>
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
     }
 }

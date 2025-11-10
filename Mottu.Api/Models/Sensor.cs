@@ -1,48 +1,27 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Mottu.Api.Models
+namespace Mottu.Api.Models.Entities
 {
-    /// <summary>
-    /// Representa um sensor de localização instalado em um pátio.
-    /// Corresponde à tabela 'Sensor' no banco de dados.
-    /// </summary>
+    // Representa um sensor de localização ou de status em um pátio ou moto.
     public class Sensor
     {
-        /// <summary>
-        /// Identificador único do sensor (Chave Primária).
-        /// </summary>
-        /// <example>25</example>
         [Key]
-        public int SensorId { get; set; }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// Descrição da localização ou tipo do sensor.
-        /// </summary>
-        /// <example>Sensor de RFID - Portão de Saída Leste</example>
-        [StringLength(100, ErrorMessage = "A descrição não pode exceder 100 caracteres.")]
-        public string? Descricao { get; set; }
+        [Required(ErrorMessage = "A descrição é obrigatória")]
+        [MaxLength(150)]
+        public required string Descricao { get; set; } // Usado no mapeamento de Localizacao
 
-        // --- Relacionamento com Patio (Muitos-para-Um) ---
+        [Required]
+        public bool Ativo { get; set; }
 
-        /// <summary>
-        /// Chave estrangeira que referencia o Pátio onde o sensor está instalado.
-        /// </summary>
-        /// <example>10</example>
+        // Chave estrangeira para Patio
         public int PatioId { get; set; }
 
-        /// <summary>
-        /// Propriedade de navegação para o Pátio.
-        /// </summary>
-        [ForeignKey("PatioId")]
-        public Patio Patio { get; set; } = null!;
+        // Propriedade de navegação para Patio (Usado para buscar o NomePatio)
+        public required Patio Patio { get; set; }
 
-        // --- Relacionamento com Localizacao (Um-para-Muitos) ---
-
-        /// <summary>
-        /// Histórico de localizações detectadas por este sensor.
-        /// </summary>
-        public ICollection<Localizacao> Localizacoes { get; set; } = new List<Localizacao>();
+        // Propriedade de navegação para Localizações
+        public ICollection<Localizacao>? Localizacoes { get; set; }
     }
 }

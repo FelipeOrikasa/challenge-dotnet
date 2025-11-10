@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Mottu.Api.Data;
 using Mottu.Api.DTOs.SensorDtos;
 using Mottu.Api.DTOs.Shared;
-using Mottu.Api.Models;
+using Mottu.Api.Models.Entities;
 using Mottu.Api.Repositories.Interfaces;
 using Mottu.Api.Services.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mottu.Api.Services
@@ -39,7 +41,7 @@ namespace Mottu.Api.Services
             await _sensorRepository.AddAsync(sensor);
             await _context.SaveChangesAsync();
 
-            var createdSensor = await _sensorRepository.GetByIdAsync(sensor.SensorId);
+            var createdSensor = await _sensorRepository.GetByIdAsync(sensor.Id);
             return _mapper.Map<ReadSensorDto>(createdSensor);
         }
 
@@ -51,10 +53,42 @@ namespace Mottu.Api.Services
 
         public async Task<PagedResult<ReadSensorDto>> GetAllByPatioPaginatedAsync(int patioId, int pageNumber, int pageSize)
         {
-            var sensores = await _sensorRepository.GetAllByPatioPaginatedAsync(patioId, pageNumber, pageSize);
-            var totalCount = await _sensorRepository.GetCountByPatioAsync(patioId);
-            var dtos = _mapper.Map<List<ReadSensorDto>>(sensores);
-            return new PagedResult<ReadSensorDto>(dtos, totalCount, pageNumber, pageSize);
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: Iniciando consulta - patioId: {patioId}, pageNumber: {pageNumber}, pageSize: {pageSize}");
+                Console.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: Iniciando consulta - patioId: {patioId}, pageNumber: {pageNumber}, pageSize: {pageSize}");
+                
+                var sensores = await _sensorRepository.GetAllByPatioPaginatedAsync(patioId, pageNumber, pageSize);
+                var sensoresList = sensores.ToList();
+                
+                System.Diagnostics.Debug.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: Encontrados {sensoresList.Count} sensores do banco");
+                Console.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: Encontrados {sensoresList.Count} sensores do banco");
+                
+                if (sensoresList.Count > 0)
+                {
+                    var primeiro = sensoresList.First();
+                    System.Diagnostics.Debug.WriteLine($"Primeiro sensor - Id: {primeiro.Id}, Descricao: {primeiro.Descricao}, PatioId: {primeiro.PatioId}");
+                    Console.WriteLine($"Primeiro sensor - Id: {primeiro.Id}, Descricao: {primeiro.Descricao}, PatioId: {primeiro.PatioId}");
+                }
+                
+                var totalCount = await _sensorRepository.GetCountByPatioAsync(patioId);
+                System.Diagnostics.Debug.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: TotalCount: {totalCount}");
+                Console.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: TotalCount: {totalCount}");
+                
+                var dtos = _mapper.Map<List<ReadSensorDto>>(sensoresList);
+                
+                System.Diagnostics.Debug.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: Após mapeamento, {dtos.Count} sensores no response");
+                Console.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: Após mapeamento, {dtos.Count} sensores no response");
+                
+                return new PagedResult<ReadSensorDto>(dtos, totalCount, pageNumber, pageSize);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: ERRO - {ex.Message}");
+                Console.WriteLine($"SensorService.GetAllByPatioPaginatedAsync: ERRO - {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                throw;
+            }
         }
 
         public async Task UpdateAsync(int id, UpdateSensorDto updateDto)

@@ -1,4 +1,4 @@
-using Mottu.Api.Models;
+using Mottu.Api.Models.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,14 +23,14 @@ namespace Mottu.Api.Repositories.Interfaces
         /// <param name="pageNumber">O número da página.</param>
         /// <param name="pageSize">O tamanho da página.</param>
         /// <returns>Uma coleção de registros de localização da moto especificada.</returns>
-        Task<IEnumerable<Localizacao>> GetAllByMotoPaginatedAsync(int motoId, int pageNumber, int pageSize);
+        Task<IEnumerable<Localizacao>> GetAllByMotoPaginatedAsync(Guid motoId, int pageNumber, int pageSize);
 
         /// <summary>
         /// Retorna a contagem total de registros de localização para uma moto específica.
         /// </summary>
         /// <param name="motoId">O ID da moto.</param>
         /// <returns>O número total de registros de localização para a moto.</returns>
-        Task<int> GetCountByMotoAsync(int motoId);
+        Task<int> GetCountByMotoAsync(Guid motoId);
 
         /// <summary>
         /// Remove um registro de localização (operação administrativa).
@@ -43,6 +43,6 @@ namespace Mottu.Api.Repositories.Interfaces
         /// </summary>
         /// <param name="id">O ID do registro de localização.</param>
         /// <returns>O registro de localização encontrado ou nulo.</returns>
-        Task<Localizacao?> GetByIdAsync(int id);
+        Task<Localizacao?> GetByIdAsync(Guid id);
     }
 }

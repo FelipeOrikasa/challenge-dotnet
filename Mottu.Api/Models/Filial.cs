@@ -1,40 +1,22 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Mottu.Api.Models
+namespace Mottu.Api.Models.Entities
 {
-    /// <summary>
-    /// Representa a entidade Filial, a unidade de negócio principal.
-    /// Corresponde à tabela 'Filial' no banco de dados.
-    /// </summary>
+    // Representa a filial da Mottu.
     public class Filial
     {
-        /// <summary>
-        /// Identificador único da filial (Chave Primária).
-        /// </summary>
-        /// <example>1</example>
         [Key]
-        public int FilialId { get; set; }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// Nome descritivo da filial.
-        /// </summary>
-        /// <example>Mottu - Unidade Central SP</example>
-        [Required(ErrorMessage = "O nome da filial é obrigatório.")]
-        [StringLength(100, ErrorMessage = "O nome da filial não pode exceder 100 caracteres.")]
-        public string NomeFilial { get; set; } = null!;
+        [Required(ErrorMessage = "O nome da filial é obrigatório")]
+        [MaxLength(100)]
+        public required string NomeFilial { get; set; } // Propriedade que o AutoMapper busca.
 
-        /// <summary>
-        /// Cidade onde a filial está localizada.
-        /// </summary>
-        /// <example>São Paulo</example>
-        [StringLength(100, ErrorMessage = "O nome da cidade não pode exceder 100 caracteres.")]
-        public string? Cidade { get; set; }
+        [Required(ErrorMessage = "O endereço é obrigatório")]
+        [MaxLength(200)]
+        public required string Endereco { get; set; }
 
-        // Propriedade de navegação para o Entity Framework Core
-        /// <summary>
-        /// Coleção de pátios que pertencem a esta filial.
-        /// </summary>
-        public ICollection<Patio> Patios { get; set; } = new List<Patio>();
+        // Propriedade de navegação para Pátios
+        public ICollection<Patio>? Patios { get; set; }
     }
 }

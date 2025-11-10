@@ -10,10 +10,9 @@ namespace Mottu.Api.DTOs.LocalizacaoDtos
         /// <summary>
         /// ID da moto que foi detectada.
         /// </summary>
-        /// <example>501</example>
+        /// <example>550e8400-e29b-41d4-a716-446655440000</example>
         [Required(ErrorMessage = "O ID da moto é obrigatório.")]
-        [Range(1, int.MaxValue, ErrorMessage = "O ID da moto deve ser um número válido.")]
-        public int MotoId { get; set; }
+        public Guid MotoId { get; set; }
 
         /// <summary>
         /// ID do sensor que detectou a moto.

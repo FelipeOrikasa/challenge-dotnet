@@ -2,12 +2,12 @@ using AutoMapper;
 using Mottu.Api.Data;
 using Mottu.Api.DTOs.FilialDtos;
 using Mottu.Api.DTOs.Shared;
-using Mottu.Api.Models;
+using Mottu.Api.Models.Entities;
 using Mottu.Api.Repositories.Interfaces;
 using Mottu.Api.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Mottu.Api.Utils;
 namespace Mottu.Api.Services
 {
     public class FilialService : IFilialService

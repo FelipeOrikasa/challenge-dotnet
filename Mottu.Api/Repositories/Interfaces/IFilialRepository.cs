@@ -1,4 +1,4 @@
-using Mottu.Api.Models;
+using Mottu.Api.Models.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

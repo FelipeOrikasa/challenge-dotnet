@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Mottu.Api.Data;
-using Mottu.Api.Models;
+using Mottu.Api.Models.Entities;
 using Mottu.Api.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +29,7 @@ namespace Mottu.Api.Repositories
             // Usa .Include() para carregar os dados da Filial relacionada na mesma consulta.
             return await _context.Patios
                 .Include(p => p.Filial)
-                .FirstOrDefaultAsync(p => p.PatioId == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<Patio>> GetAllPaginatedAsync(int pageNumber, int pageSize)

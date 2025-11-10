@@ -12,8 +12,8 @@ namespace Mottu.Api.DTOs.MotoDtos
         /// <summary>
         /// Identificador único da moto.
         /// </summary>
-        /// <example>501</example>
-        public int MotoId { get; set; }
+        /// <example>550e8400-e29b-41d4-a716-446655440000</example>
+        public Guid MotoId { get; set; }
 
         /// <summary>
         /// Placa de identificação da moto.

@@ -2,12 +2,12 @@ using AutoMapper;
 using Mottu.Api.Data;
 using Mottu.Api.DTOs.PatioDtos;
 using Mottu.Api.DTOs.Shared;
-using Mottu.Api.Models;
+using Mottu.Api.Models.Entities;
 using Mottu.Api.Repositories.Interfaces;
 using Mottu.Api.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Mottu.Api.Utils;
 namespace Mottu.Api.Services
 {
     public class PatioService : IPatioService
@@ -41,7 +41,7 @@ namespace Mottu.Api.Services
             await _context.SaveChangesAsync();
 
             // Recarrega a entidade com os dados da filial para retornar um DTO completo.
-            var createdPatio = await _patioRepository.GetByIdAsync(patio.PatioId);
+            var createdPatio = await _patioRepository.GetByIdAsync(patio.Id);
             return _mapper.Map<ReadPatioDto>(createdPatio);
         }
 

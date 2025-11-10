@@ -4,6 +4,48 @@
         <name>Mottu.Api</name>
     </assembly>
     <members>
+        <member name="M:Mottu.Api.Controllers.AuthController.Login(Mottu.Api.Models.DTOs.Request.LoginRequest)">
+            <summary>
+            Realiza a autenticação e retorna um JWT (JSON Web Token).
+            </summary>
+            <remarks>
+            Credenciais de demonstração: Username 'admin' ou 'user', Senha '123456'
+            </remarks>
+            <param name="request">DTO contendo Username e Password.</param>
+            <returns>Objeto contendo o token JWT e o tempo de expiração.</returns>
+        </member>
+        <member name="M:Mottu.Api.Controllers.DeliveryMIController.Predict(Mottu.Api.Models.DTOs.Request.PredictDeliveryRequestDto)">
+            <summary>
+            Estima o tempo de entrega de uma encomenda com base nas características fornecidas (Distância, Peso e Fator).
+            </summary>
+            <param name="data">O DTO de Requisição enviado pelo cliente (contém Distância e Peso).</param>
+            <returns>O tempo estimado de entrega em minutos.</returns>
+        </member>
+        <member name="M:Mottu.Api.Controllers.EntregadorController.Post(Mottu.Api.Models.DTOs.Request.EntregadorRequest)">
+            <summary>
+            Cria um novo Entregador no sistema.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Controllers.EntregadorController.GetAll">
+            <summary>
+            Busca todos os entregadores cadastrados.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Controllers.EntregadorController.GetById(System.Guid)">
+            <summary>
+            Busca um entregador por ID (Guid).
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Controllers.EntregadorController.Put(System.Guid,Mottu.Api.Models.DTOs.Request.EntregadorUpdateRequest)">
+            <summary>
+            Atualiza os dados de um entregador existente.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Controllers.EntregadorController.Delete(System.Guid)">
+            <summary>
+            Exclui um entregador por ID (Guid).
+            </summary>
+        </member>
         <member name="M:Mottu.Api.Controllers.FiliaisController.GetAll(System.Int32,System.Int32)">
             <summary>
             Retorna uma lista paginada de filiais.
@@ -40,7 +82,29 @@
             <response code="400">Se a remoção for inválida (ex: filial com pátios).</response>
             <response code="404">Se a filial não for encontrada.</response>
         </member>
-        <member name="M:Mottu.Api.Controllers.LocalizacoesController.GetAllByMoto(System.Int32,System.Int32,System.Int32)">
+        <member name="M:Mottu.Api.Controllers.LocacaoController.Rent(Mottu.Api.Models.DTOs.Request.LocacaoRequestDto)">
+            <summary>
+            Inicia uma nova locação de moto para um entregador.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Controllers.LocacaoController.ReturnMoto(System.Guid,System.DateTime)">
+            <summary>
+            Registra a devolução de uma moto e calcula o custo final.
+            </summary>
+            <param name="id">ID da locação ativa.</param>
+            <param name="dataDevolucao">Data efetiva da devolução (formato yyyy-MM-dd).</param>
+        </member>
+        <member name="M:Mottu.Api.Controllers.LocacaoController.GetById(System.Guid)">
+            <summary>
+            Busca uma locação pelo ID.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Controllers.LocacaoController.GetAll">
+            <summary>
+            Lista todas as locações.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Controllers.LocalizacoesController.GetAllByMoto(System.Guid,System.Int32,System.Int32)">
             <summary>
             Retorna o histórico de localizações de uma moto específica, de forma paginada.
             </summary>
@@ -49,7 +113,7 @@
             <param name="pageSize">O tamanho da página (padrão: 10).</param>
             <response code="200">Retorna a lista paginada de registros de localização.</response>
         </member>
-        <member name="M:Mottu.Api.Controllers.LocalizacoesController.GetById(System.Int32)">
+        <member name="M:Mottu.Api.Controllers.LocalizacoesController.GetById(System.Guid)">
             <summary>
             Busca um registro de localização específico pelo seu ID.
             </summary>
@@ -65,7 +129,7 @@
             <response code="201">Retorna o registro do evento recém-criado.</response>
             <response code="404">Se a moto ou o sensor especificados não forem encontrados.</response>
         </member>
-        <member name="M:Mottu.Api.Controllers.LocalizacoesController.Delete(System.Int32)">
+        <member name="M:Mottu.Api.Controllers.LocalizacoesController.Delete(System.Guid)">
             <summary>
             Remove um registro de localização (operação administrativa).
             </summary>
@@ -73,57 +137,31 @@
             <response code="204">Se o registro foi removido com sucesso.</response>
             <response code="404">Se o registro não for encontrado.</response>
         </member>
-        <member name="M:Mottu.Api.Controllers.MotosController.GetAllByPatio(System.Int32,System.Int32,System.Int32)">
+        <member name="M:Mottu.Api.Controllers.MotoController.Post(Mottu.Api.Models.DTOs.Request.MotoRequest)">
             <summary>
-            Retorna uma lista paginada de motos de um pátio específico.
+            Cria uma nova Motocicleta no sistema.
             </summary>
-            <param name="patioId">O ID do pátio.</param>
-            <param name="pageNumber">O número da página (padrão: 1).</param>
-            <param name="pageSize">O tamanho da página (padrão: 10).</param>
-            <response code="200">Retorna a lista paginada de motos.</response>
         </member>
-        <member name="M:Mottu.Api.Controllers.MotosController.GetById(System.Int32)">
+        <member name="M:Mottu.Api.Controllers.MotoController.GetAll">
             <summary>
-            Busca uma moto específica pelo seu ID.
+            Busca todas as motocicletas cadastradas.
             </summary>
-            <param name="id">O ID da moto.</param>
-            <response code="200">Retorna os dados da moto encontrada.</response>
-            <response code="404">Se a moto não for encontrada.</response>
         </member>
-        <member name="M:Mottu.Api.Controllers.MotosController.GetByPlaca(System.String)">
+        <member name="M:Mottu.Api.Controllers.MotoController.GetById(System.Guid)">
             <summary>
-            Busca uma moto específica pela sua placa.
+            Busca uma motocicleta por ID (Guid).
+            Nota: O endpoint de busca por Placa precisa ser separado ou o método de serviço adaptado.
             </summary>
-            <param name="placa">A placa da moto.</param>
-            <response code="200">Retorna os dados da moto encontrada.</response>
-            <response code="404">Se a moto não for encontrada.</response>
         </member>
-        <member name="M:Mottu.Api.Controllers.MotosController.Create(Mottu.Api.DTOs.MotoDtos.CreateMotoDto)">
+        <member name="M:Mottu.Api.Controllers.MotoController.Put(System.Guid,Mottu.Api.Models.DTOs.Request.MotoUpdateRequest)">
             <summary>
-            Cadastra uma nova moto.
+            Atualiza os dados de uma motocicleta existente (apenas a Placa).
             </summary>
-            <param name="createDto">Os dados da moto a ser criada.</param>
-            <response code="201">Retorna os dados da moto recém-criada.</response>
-            <response code="400">Se os dados forem inválidos (ex: placa duplicada).</response>
-            <response code="404">Se o pátio especificado não for encontrado.</response>
         </member>
-        <member name="M:Mottu.Api.Controllers.MotosController.UpdatePatio(System.Int32,Mottu.Api.DTOs.MotoDtos.UpdateMotoDto)">
+        <member name="M:Mottu.Api.Controllers.MotoController.Delete(System.Guid)">
             <summary>
-            Move uma moto para um novo pátio.
+            Exclui uma motocicleta por ID (Guid).
             </summary>
-            <param name="id">O ID da moto a ser movida.</param>
-            <param name="updateDto">Objeto contendo o ID do novo pátio.</param>
-            <response code="204">Se a moto foi movida com sucesso.</response>
-            <response code="404">Se a moto ou o pátio de destino não forem encontrados.</response>
-        </member>
-        <member name="M:Mottu.Api.Controllers.MotosController.Delete(System.Int32)">
-            <summary>
-            Remove uma moto.
-            </summary>
-            <param name="id">O ID da moto a ser removida.</param>
-            <response code="204">Se a moto foi removida com sucesso.</response>
-            <response code="400">Se a remoção for inválida (ex: moto com histórico de localização).</response>
-            <response code="404">Se a moto não for encontrada.</response>
         </member>
         <member name="M:Mottu.Api.Controllers.PatiosController.GetAllByFilial(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -168,6 +206,23 @@
             <response code="400">Se a remoção for inválida (ex: pátio com motos).</response>
             <response code="404">Se o pátio não for encontrado.</response>
         </member>
+        <member name="T:Mottu.Api.Controllers.PredictionController">
+            <summary>
+            Controller responsável por fornecer previsões de Machine Learning (ML.NET).
+            Requer autenticação JWT.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Controllers.PredictionController.PredictDeliveryTime(Mottu.Api.MLModels.DeliveryTimeInput)">
+            <summary>
+            Prevê o tempo de entrega com base nas características fornecidas.
+            </summary>
+            <remarks>
+            Recebe um array de features e retorna o tempo de entrega previsto.
+            Exemplo de Features: [Distância_KM, Peso_KG, Fator_Clima_Tráfego]
+            </remarks>
+            <param name="input">Dados de entrada para a predição (DeliveryTimeInput).</param>
+            <returns>O tempo de entrega previsto em minutos.</returns>
+        </member>
         <member name="M:Mottu.Api.Controllers.SensoresController.GetAllByPatio(System.Int32,System.Int32,System.Int32)">
             <summary>
             Retorna uma lista paginada de sensores de um pátio específico.
@@ -210,6 +265,28 @@
             <response code="204">Se o sensor foi removido com sucesso.</response>
             <response code="400">Se a remoção for inválida (ex: sensor com histórico de localização).</response>
             <response code="404">Se o sensor não for encontrado.</response>
+        </member>
+        <member name="T:Mottu.Api.Data.AppDbContext">
+            <summary>
+            Contexto do banco de dados da aplicação, configurando todas as entidades.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Data.DataSeeder">
+            <summary>
+            Classe responsável por popular o banco de dados com dados iniciais.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Data.DataSeeder.SeedAsync(Mottu.Api.Data.AppDbContext,System.Boolean)">
+            <summary>
+            Popula o banco de dados com dados iniciais se estiver vazio.
+            </summary>
+            <param name="context">O contexto do banco de dados.</param>
+            <param name="forceSeed">Se true, força a população mesmo se já existirem dados.</param>
+        </member>
+        <member name="M:Mottu.Api.Data.DataSeeder.UpdateExistingDataAsync(Mottu.Api.Data.AppDbContext)">
+            <summary>
+            Atualiza dados antigos que podem estar incompatíveis com a nova estrutura.
+            </summary>
         </member>
         <member name="T:Mottu.Api.DTOs.FilialDtos.CreateFilialDto">
             <summary>
@@ -285,7 +362,7 @@
             <summary>
             ID da moto que foi detectada.
             </summary>
-            <example>501</example>
+            <example>550e8400-e29b-41d4-a716-446655440000</example>
         </member>
         <member name="P:Mottu.Api.DTOs.LocalizacaoDtos.CreateLocalizacaoDto.SensorId">
             <summary>
@@ -313,7 +390,7 @@
             <summary>
             ID da moto que foi localizada.
             </summary>
-            <example>501</example>
+            <example>550e8400-e29b-41d4-a716-446655440000</example>
         </member>
         <member name="P:Mottu.Api.DTOs.LocalizacaoDtos.ReadLocalizacaoDto.PlacaMoto">
             <summary>
@@ -384,7 +461,7 @@
             <summary>
             Identificador único da moto.
             </summary>
-            <example>501</example>
+            <example>550e8400-e29b-41d4-a716-446655440000</example>
         </member>
         <member name="P:Mottu.Api.DTOs.MotoDtos.ReadMotoDto.Placa">
             <summary>
@@ -622,7 +699,7 @@
             </summary>
             <example>5</example>
         </member>
-        <member name="M:Mottu.Api.DTOs.Shared.PagedResult`1.#ctor(System.Collections.Generic.List{`0},System.Int32,System.Int32,System.Int32)">
+        <member name="M:Mottu.Api.DTOs.Shared.PagedResult`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Int32,System.Int32,System.Int32)">
             <summary>
             Construtor para o resultado paginado.
             </summary>
@@ -630,6 +707,118 @@
             <param name="totalCount">A contagem total de itens.</param>
             <param name="pageNumber">O número da página atual.</param>
             <param name="pageSize">O tamanho da página.</param>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Request.EntregadorRequest">
+            <summary>
+            DTO para criação de um novo Entregador.
+            </summary>
+        </member>
+        <member name="P:Mottu.Api.Models.DTOs.Request.EntregadorRequest.ImagemCNH">
+            <summary>
+            Nome do arquivo da imagem da CNH (apenas o nome, será usado para upload).
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Request.EntregadorUpdateRequest">
+            <summary>
+            DTO para atualização de um Entregador (usado apenas para atualizar a CNH/Imagem).
+            </summary>
+        </member>
+        <member name="P:Mottu.Api.Models.DTOs.Request.EntregadorUpdateRequest.ImagemCNH">
+            <summary>
+            Nome do arquivo da imagem da CNH (apenas o nome, será usado para upload).
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Request.LoginRequest">
+            <summary>
+            DTO para requisição de autenticação (Login).
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Request.MotoRequest">
+            <summary>
+            DTO para criação de uma nova Moto.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Request.MotoUpdateRequest">
+            <summary>
+            DTO para atualização de uma Moto (permite apenas a troca de placa).
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Request.PredictDeliveryRequestDto">
+            <summary>
+            Define os dados de entrada para o endpoint de predição.
+            Esta classe é o DTO de Requisição (JSON Body) do Controller.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Response.PredictDeliveryResponseDto">
+            <summary>
+            Define o resultado da predição.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Response.EntregadorResponse">
+            <summary>
+            DTO de resposta para um Entregador.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.DTOs.Response.MotoResponse">
+            <summary>
+            DTO de resposta para uma Moto.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.Enums.StatusLocacao">
+            <summary>
+            Define os possíveis status para uma Locação de moto.
+            </summary>
+        </member>
+        <member name="F:Mottu.Api.Models.Enums.StatusLocacao.Ativa">
+            <summary>
+            Locação em andamento, dentro do prazo.
+            </summary>
+        </member>
+        <member name="F:Mottu.Api.Models.Enums.StatusLocacao.FinalizadaNoPrazo">
+            <summary>
+            Locação encerrada no prazo previsto.
+            </summary>
+        </member>
+        <member name="F:Mottu.Api.Models.Enums.StatusLocacao.FinalizadaAntecipada">
+            <summary>
+            Locação encerrada antes do prazo (sujeita a multa).
+            </summary>
+        </member>
+        <member name="F:Mottu.Api.Models.Enums.StatusLocacao.FinalizadaAtrasada">
+            <summary>
+            Locação devolvida com atraso (sujeita a multa por dia extra).
+            </summary>
+        </member>
+        <member name="F:Mottu.Api.Models.Enums.StatusLocacao.Expirada">
+            <summary>
+            Locação expirada, mas a moto ainda não foi devolvida.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Models.Enums.TipoCNH">
+            <summary>
+            Define os tipos de categoria de CNH aceitas para os entregadores.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.InMemory.InMemoryStorage`1">
+            <summary>
+            Armazenamento genérico em memória.
+            Usado apenas para simulações locais ou testes sem afetar os domínios reais.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Mappers.EntregadorProfile">
+            <summary>
+            Perfil de mapeamento do AutoMapper para a entidade Entregador.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Mappers.LocacaoProfile">
+            <summary>
+            Perfil de mapeamento do AutoMapper para a entidade Locacao.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Mappers.MotoProfile">
+            <summary>
+            Perfil de mapeamento do AutoMapper para a entidade Moto.
+            </summary>
         </member>
         <member name="T:Mottu.Api.Migrations.InitialSchema">
             <inheritdoc />
@@ -643,194 +832,27 @@
         <member name="M:Mottu.Api.Migrations.InitialSchema.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:Mottu.Api.Models.Filial">
+        <member name="T:Mottu.Api.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:Mottu.Api.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Mottu.Api.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Mottu.Api.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Mottu.Api.MLModels.DeliveryTimePrediction">
             <summary>
-            Representa a entidade Filial, a unidade de negócio principal.
-            Corresponde à tabela 'Filial' no banco de dados.
+            Classe que define o resultado da predição do modelo ML.NET.
+            O atributo ColumnName deve coincidir com o nome da coluna de previsão ('Score').
             </summary>
         </member>
-        <member name="P:Mottu.Api.Models.Filial.FilialId">
+        <member name="T:Mottu.Api.Repositories.EntregadorRepository">
             <summary>
-            Identificador único da filial (Chave Primária).
-            </summary>
-            <example>1</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Filial.NomeFilial">
-            <summary>
-            Nome descritivo da filial.
-            </summary>
-            <example>Mottu - Unidade Central SP</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Filial.Cidade">
-            <summary>
-            Cidade onde a filial está localizada.
-            </summary>
-            <example>São Paulo</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Filial.Patios">
-            <summary>
-            Coleção de pátios que pertencem a esta filial.
-            </summary>
-        </member>
-        <member name="T:Mottu.Api.Models.Localizacao">
-            <summary>
-            Representa um registro de localização de uma moto por um sensor em um momento específico.
-            Esta é a entidade transacional do sistema, registrando um evento que conecta uma Moto a um Sensor.
-            Corresponde à tabela 'Localizacao' no banco de dados.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Localizacao.LocalizacaoId">
-            <summary>
-            Identificador único do registro de localização (Chave Primária).
-            </summary>
-            <example>1001</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Localizacao.DataHora">
-            <summary>
-            Data e hora exatas em que a localização foi registrada.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Localizacao.MotoId">
-            <summary>
-            Chave estrangeira que referencia a Moto que foi localizada.
-            </summary>
-            <example>501</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Localizacao.Moto">
-            <summary>
-            Propriedade de navegação para a Moto.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Localizacao.SensorId">
-            <summary>
-            Chave estrangeira que referencia o Sensor que detectou a moto.
-            </summary>
-            <example>25</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Localizacao.Sensor">
-            <summary>
-            Propriedade de navegação para o Sensor.
-            </summary>
-        </member>
-        <member name="T:Mottu.Api.Models.Moto">
-            <summary>
-            Representa uma moto da frota da empresa.
-            Corresponde à tabela 'Moto' no banco de dados.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Moto.MotoId">
-            <summary>
-            Identificador único da moto (Chave Primária).
-            </summary>
-            <example>501</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Moto.Placa">
-            <summary>
-            Placa da moto. Este campo deve ser único.
-            A restrição de unicidade será configurada no AppDbContext.
-            </summary>
-            <example>BRA2E19</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Moto.Modelo">
-            <summary>
-            Modelo da moto.
-            </summary>
-            <example>Honda CB 300F Twister</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Moto.Ano">
-            <summary>
-            Ano de fabricação da moto.
-            </summary>
-            <example>2024</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Moto.PatioId">
-            <summary>
-            Chave estrangeira que referencia o Pátio onde a moto está (ou foi vista por último).
-            </summary>
-            <example>10</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Moto.Patio">
-            <summary>
-            Propriedade de navegação para o Pátio.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Moto.Localizacoes">
-            <summary>
-            Histórico de localizações registradas para esta moto.
-            </summary>
-        </member>
-        <member name="T:Mottu.Api.Models.Patio">
-            <summary>
-            Representa um pátio, que pertence a uma filial e pode conter motos e sensores.
-            Corresponde à tabela 'Patio' no banco de dados.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Patio.PatioId">
-            <summary>
-            Identificador único do pátio (Chave Primária).
-            </summary>
-            <example>10</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Patio.NomePatio">
-            <summary>
-            Nome descritivo do pátio.
-            </summary>
-            <example>Pátio A - Motos de Baixa Cilindrada</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Patio.FilialId">
-            <summary>
-            Chave estrangeira que referencia a Filial à qual este pátio pertence.
-            </summary>
-            <example>1</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Patio.Filial">
-            <summary>
-            Propriedade de navegação para a Filial. Permite o acesso
-            aos dados da filial a partir de um objeto Pátio.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Patio.Motos">
-            <summary>
-            Coleção de motos estacionadas neste pátio.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Patio.Sensores">
-            <summary>
-            Coleção de sensores instalados neste pátio.
-            </summary>
-        </member>
-        <member name="T:Mottu.Api.Models.Sensor">
-            <summary>
-            Representa um sensor de localização instalado em um pátio.
-            Corresponde à tabela 'Sensor' no banco de dados.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Sensor.SensorId">
-            <summary>
-            Identificador único do sensor (Chave Primária).
-            </summary>
-            <example>25</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Sensor.Descricao">
-            <summary>
-            Descrição da localização ou tipo do sensor.
-            </summary>
-            <example>Sensor de RFID - Portão de Saída Leste</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Sensor.PatioId">
-            <summary>
-            Chave estrangeira que referencia o Pátio onde o sensor está instalado.
-            </summary>
-            <example>10</example>
-        </member>
-        <member name="P:Mottu.Api.Models.Sensor.Patio">
-            <summary>
-            Propriedade de navegação para o Pátio.
-            </summary>
-        </member>
-        <member name="P:Mottu.Api.Models.Sensor.Localizacoes">
-            <summary>
-            Histórico de localizações detectadas por este sensor.
+            Repositório de persistência de dados do Entregador, usando Entity Framework Core.
             </summary>
         </member>
         <member name="T:Mottu.Api.Repositories.Interfaces.IFilialRepository">
@@ -839,7 +861,7 @@
             Abstrai as operações de acesso a dados (CRUD) para as filiais.
             </summary>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IFilialRepository.AddAsync(Mottu.Api.Models.Filial)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IFilialRepository.AddAsync(Mottu.Api.Models.Entities.Filial)">
             <summary>
             Adiciona uma nova filial de forma assíncrona.
             </summary>
@@ -866,14 +888,14 @@
             </summary>
             <returns>O número total de filiais.</returns>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IFilialRepository.Update(Mottu.Api.Models.Filial)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IFilialRepository.Update(Mottu.Api.Models.Entities.Filial)">
             <summary>
             Marca uma filial para atualização.
             A persistência ocorrerá quando SaveChanges for chamado.
             </summary>
             <param name="filial">A entidade Filial a ser atualizada.</param>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IFilialRepository.Delete(Mottu.Api.Models.Filial)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IFilialRepository.Delete(Mottu.Api.Models.Entities.Filial)">
             <summary>
             Marca uma filial para remoção.
             A persistência ocorrerá quando SaveChanges for chamado.
@@ -886,13 +908,13 @@
             Abstrai as operações de acesso aos dados de histórico de localização.
             </summary>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.AddAsync(Mottu.Api.Models.Localizacao)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.AddAsync(Mottu.Api.Models.Entities.Localizacao)">
             <summary>
             Adiciona um novo registro de localização.
             </summary>
             <param name="localizacao">A entidade Localizacao a ser adicionada.</param>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.GetAllByMotoPaginatedAsync(System.Int32,System.Int32,System.Int32)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.GetAllByMotoPaginatedAsync(System.Guid,System.Int32,System.Int32)">
             <summary>
             Busca todos os registros de localização de uma moto específica, de forma paginada.
             </summary>
@@ -901,20 +923,20 @@
             <param name="pageSize">O tamanho da página.</param>
             <returns>Uma coleção de registros de localização da moto especificada.</returns>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.GetCountByMotoAsync(System.Int32)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.GetCountByMotoAsync(System.Guid)">
             <summary>
             Retorna a contagem total de registros de localização para uma moto específica.
             </summary>
             <param name="motoId">O ID da moto.</param>
             <returns>O número total de registros de localização para a moto.</returns>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.Delete(Mottu.Api.Models.Localizacao)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.Delete(Mottu.Api.Models.Entities.Localizacao)">
             <summary>
             Remove um registro de localização (operação administrativa).
             </summary>
             <param name="localizacao">A entidade Localizacao a ser removida.</param>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.GetByIdAsync(System.Int32)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.ILocalizacaoRepository.GetByIdAsync(System.Guid)">
             <summary>
             Busca um registro de localização pelo seu ID.
             </summary>
@@ -927,13 +949,13 @@
             Abstrai as operações de acesso a dados para as motos.
             </summary>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IMotoRepository.AddAsync(Mottu.Api.Models.Moto)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IMotoRepository.AddAsync(Mottu.Api.Models.Entities.Moto)">
             <summary>
             Adiciona uma nova moto de forma assíncrona.
             </summary>
             <param name="moto">A entidade Moto a ser adicionada.</param>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IMotoRepository.GetByIdAsync(System.Int32)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IMotoRepository.GetByIdAsync(System.Guid)">
             <summary>
             Busca uma moto pelo seu ID de forma assíncrona.
             </summary>
@@ -977,13 +999,13 @@
             <param name="patioId">O ID do pátio.</param>
             <returns>O número total de motos no pátio.</returns>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IMotoRepository.Update(Mottu.Api.Models.Moto)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IMotoRepository.Update(Mottu.Api.Models.Entities.Moto)">
             <summary>
             Marca uma moto para atualização.
             </summary>
             <param name="moto">A entidade Moto a ser atualizada.</param>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IMotoRepository.Delete(Mottu.Api.Models.Moto)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IMotoRepository.Delete(Mottu.Api.Models.Entities.Moto)">
             <summary>
             Marca uma moto para remoção.
             </summary>
@@ -995,7 +1017,7 @@
             Abstrai as operações de acesso a dados para os pátios.
             </summary>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IPatioRepository.AddAsync(Mottu.Api.Models.Patio)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IPatioRepository.AddAsync(Mottu.Api.Models.Entities.Patio)">
             <summary>
             Adiciona um novo pátio de forma assíncrona.
             </summary>
@@ -1038,13 +1060,13 @@
             <param name="filialId">O ID da filial.</param>
             <returns>O número total de pátios na filial.</returns>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IPatioRepository.Update(Mottu.Api.Models.Patio)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IPatioRepository.Update(Mottu.Api.Models.Entities.Patio)">
             <summary>
             Marca um pátio para atualização.
             </summary>
             <param name="patio">A entidade Pátio a ser atualizada.</param>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.IPatioRepository.Delete(Mottu.Api.Models.Patio)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.IPatioRepository.Delete(Mottu.Api.Models.Entities.Patio)">
             <summary>
             Marca um pátio para remoção.
             </summary>
@@ -1055,7 +1077,7 @@
             Interface que define o contrato para o repositório da entidade Sensor.
             </summary>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.ISensorRepository.AddAsync(Mottu.Api.Models.Sensor)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.ISensorRepository.AddAsync(Mottu.Api.Models.Entities.Sensor)">
             <summary>
             Adiciona um novo sensor.
             </summary>
@@ -1075,58 +1097,69 @@
             Retorna a contagem total de sensores em um pátio específico.
             </summary>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.ISensorRepository.Update(Mottu.Api.Models.Sensor)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.ISensorRepository.Update(Mottu.Api.Models.Entities.Sensor)">
             <summary>
             Atualiza um sensor existente.
             </summary>
         </member>
-        <member name="M:Mottu.Api.Repositories.Interfaces.ISensorRepository.Delete(Mottu.Api.Models.Sensor)">
+        <member name="M:Mottu.Api.Repositories.Interfaces.ISensorRepository.Delete(Mottu.Api.Models.Entities.Sensor)">
             <summary>
             Remove um sensor.
             </summary>
         </member>
+        <member name="T:Mottu.Api.Repositories.Interfaces.IBaseRepository`1">
+            <summary>
+            Interface genérica que define as operações básicas de CRUD para todas as entidades.
+            </summary>
+            <typeparam name="TEntity">A entidade que o repositório manipula.</typeparam>
+        </member>
+        <member name="T:Mottu.Api.Repositories.Interfaces.IEntregadorRepository">
+            <summary>
+            Define operações de persistência de dados para a entidade Entregador.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Repositories.Interfaces.ILocacaoRepository">
+            <summary>
+            Define operações de persistência de dados para a entidade Locacao.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Repositories.Implementations.LocacaoRepository">
+            <summary>
+            Implementação do repositório de Locacao.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Repositories.Implementations.LocacaoRepository.GetActiveByMotoIdAsync(System.Guid)">
+            <summary>
+            Busca uma locação ativa (DataTerminoEfetiva é NULL) pelo ID da Moto.
+            </summary>
+        </member>
+        <member name="M:Mottu.Api.Repositories.Implementations.LocacaoRepository.GetActiveByEntregadorIdAsync(System.Guid)">
+            <summary>
+            Busca uma locação ativa (DataTerminoEfetiva é NULL) pelo ID do Entregador.
+            </summary>
+        </member>
+        <member name="T:Mottu.Api.Repositories.Implementations.BaseRepository`1">
+            <summary>
+            Implementação genérica do Repositório Base para operações de CRUD.
+            </summary>
+            <typeparam name="TEntity">A entidade que o repositório manipula.</typeparam>
+        </member>
+        <member name="M:Mottu.Api.Services.DeliveryPredictionService.Predict(Mottu.Api.MLModels.DeliveryTimeInput)">
+            <summary>
+            Realiza a predição do tempo de entrega com base nos dados de entrada.
+            </summary>
+            <param name="data">O modelo de input do ML.NET (DeliveryTimeInput) com as features.</param>
+            <returns>DTO de resposta com o tempo de entrega estimado, ou null se o modelo não estiver disponível.</returns>
+        </member>
+        <member name="T:Mottu.Api.Services.Interfaces.IEntregadorService">
+            <summary>
+            Define os métodos de negócios para a entidade Entregador.
+            </summary>
+        </member>
         <member name="T:Mottu.Api.Services.Interfaces.IFilialService">
             <summary>
-            Interface que define o contrato para o serviço de Filiais.
-            Contém a lógica de negócio para gerenciar as filiais.
+            Contrato de serviço para operações da entidade Filial.
             </summary>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IFilialService.CreateAsync(Mottu.Api.DTOs.FilialDtos.CreateFilialDto)">
-            <summary>
-            Cria uma nova filial.
-            </summary>
-            <param name="createDto">DTO com os dados para a criação.</param>
-            <returns>O DTO da filial recém-criada.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IFilialService.GetByIdAsync(System.Int32)">
-            <summary>
-            Busca uma filial pelo seu ID.
-            </summary>
-            <param name="id">O ID da filial.</param>
-            <returns>O DTO da filial encontrada ou nulo.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IFilialService.GetAllPaginatedAsync(System.Int32,System.Int32)">
-            <summary>
-            Busca todas as filiais de forma paginada.
-            </summary>
-            <param name="pageNumber">O número da página.</param>
-            <param name="pageSize">O tamanho da página.</param>
-            <returns>Um resultado paginado com os DTOs das filiais.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IFilialService.UpdateAsync(System.Int32,Mottu.Api.DTOs.FilialDtos.UpdateFilialDto)">
-            <summary>
-            Atualiza uma filial existente.
-            </summary>
-            <param name="id">O ID da filial a ser atualizada.</param>
-            <param name="updateDto">DTO com os novos dados.</param>
-            <returns>True se a atualização foi bem-sucedida, false caso contrário.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IFilialService.DeleteAsync(System.Int32)">
-            <summary>
-            Remove uma filial.
-            </summary>
-            <param name="id">O ID da filial a ser removida.</param>
-            <returns>True se a remoção foi bem-sucedida, false caso contrário.</returns>
         </member>
         <member name="T:Mottu.Api.Services.Interfaces.ILocalizacaoService">
             <summary>
@@ -1141,14 +1174,14 @@
             <param name="createDto">DTO com os dados para o registro da localização.</param>
             <returns>O DTO do registro de localização recém-criado.</returns>
         </member>
-        <member name="M:Mottu.Api.Services.Interfaces.ILocalizacaoService.GetByIdAsync(System.Int32)">
+        <member name="M:Mottu.Api.Services.Interfaces.ILocalizacaoService.GetByIdAsync(System.Guid)">
             <summary>
             Busca um registro de localização pelo seu ID.
             </summary>
             <param name="id">O ID do registro de localização.</param>
             <returns>O DTO do registro encontrado ou nulo.</returns>
         </member>
-        <member name="M:Mottu.Api.Services.Interfaces.ILocalizacaoService.GetAllByMotoPaginatedAsync(System.Int32,System.Int32,System.Int32)">
+        <member name="M:Mottu.Api.Services.Interfaces.ILocalizacaoService.GetAllByMotoPaginatedAsync(System.Guid,System.Int32,System.Int32)">
             <summary>
             Busca o histórico de localizações de uma moto específica, de forma paginada.
             </summary>
@@ -1157,7 +1190,7 @@
             <param name="pageSize">O tamanho da página.</param>
             <returns>Um resultado paginado com os DTOs do histórico da moto.</returns>
         </member>
-        <member name="M:Mottu.Api.Services.Interfaces.ILocalizacaoService.DeleteAsync(System.Int32)">
+        <member name="M:Mottu.Api.Services.Interfaces.ILocalizacaoService.DeleteAsync(System.Guid)">
             <summary>
             Remove um registro de localização (operação administrativa).
             </summary>
@@ -1165,54 +1198,8 @@
         </member>
         <member name="T:Mottu.Api.Services.Interfaces.IMotoService">
             <summary>
-            Interface que define o contrato para o serviço de Motos.
-            Contém a lógica de negócio para gerenciar as motos da frota.
+            Define os métodos de negócios para a entidade Moto.
             </summary>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IMotoService.CreateAsync(Mottu.Api.DTOs.MotoDtos.CreateMotoDto)">
-            <summary>
-            Cadastra uma nova moto no sistema, validando se a placa já existe.
-            </summary>
-            <param name="createDto">DTO com os dados para a criação.</param>
-            <returns>O DTO da moto recém-criada.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IMotoService.GetByIdAsync(System.Int32)">
-            <summary>
-            Busca uma moto pelo seu ID.
-            </summary>
-            <param name="id">O ID da moto.</param>
-            <returns>O DTO da moto encontrada ou nulo.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IMotoService.GetByPlacaAsync(System.String)">
-            <summary>
-            Busca uma moto pela sua placa.
-            </summary>
-            <param name="placa">A placa da moto.</param>
-            <returns>O DTO da moto encontrada ou nulo.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IMotoService.GetAllByPatioPaginatedAsync(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Busca todas as motos de um pátio específico, de forma paginada.
-            </summary>
-            <param name="patioId">O ID do pátio.</param>
-            <param name="pageNumber">O número da página.</param>
-            <param name="pageSize">O tamanho da página.</param>
-            <returns>Um resultado paginado com os DTOs das motos no pátio.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IMotoService.UpdatePatioAsync(System.Int32,System.Int32)">
-            <summary>
-            Atualiza o pátio de uma moto existente, efetivamente movendo-a.
-            </summary>
-            <param name="motoId">O ID da moto a ser atualizada.</param>
-            <param name="novoPatioId">O ID do novo pátio para onde a moto será movida.</param>
-            <returns>True se a atualização foi bem-sucedida, false caso contrário.</returns>
-        </member>
-        <member name="M:Mottu.Api.Services.Interfaces.IMotoService.DeleteAsync(System.Int32)">
-            <summary>
-            Remove uma moto do sistema.
-            </summary>
-            <param name="id">O ID da moto a ser removida.</param>
-            <returns>True se a remoção foi bem-sucedida, false caso contrário.</returns>
         </member>
         <member name="T:Mottu.Api.Services.Interfaces.IPatioService">
             <summary>
@@ -1299,6 +1286,19 @@
             Remove um sensor do sistema.
             </summary>
             <param name="id">O ID do sensor a ser removido.</param>
+        </member>
+        <member name="M:Mottu.Api.Services.TokenService.GenerateToken(System.String)">
+            <summary>
+            Gera um JSON Web Token (JWT) simples para autenticação.
+            </summary>
+            <param name="username">O nome de usuário para incluir nas Claims.</param>
+            <returns>Objeto contendo o token e o tempo de expiração.</returns>
+        </member>
+        <member name="T:Mottu.Api.Utils.ApiResponse`1">
+            <summary>
+            Classe genérica para padronizar respostas da API (sucesso ou erro).
+            </summary>
+            <typeparam name="T">O tipo de dado retornado em caso de sucesso.</typeparam>
         </member>
     </members>
 </doc>

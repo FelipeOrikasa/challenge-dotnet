@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/gabrielteodoro/Dotnet/Mottu.Api/Mottu.Api.csproj": {}
+    "C:\\Users\\Felipe\\Downloads\\projeto_final_sprint4_final\\projeto_final_sprint4\\Mottu.Api\\Mottu.Api.csproj": {}
   },
   "projects": {
-    "/Users/gabrielteodoro/Dotnet/Mottu.Api/Mottu.Api.csproj": {
+    "C:\\Users\\Felipe\\Downloads\\projeto_final_sprint4_final\\projeto_final_sprint4\\Mottu.Api\\Mottu.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/gabrielteodoro/Dotnet/Mottu.Api/Mottu.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Felipe\\Downloads\\projeto_final_sprint4_final\\projeto_final_sprint4\\Mottu.Api\\Mottu.Api.csproj",
         "projectName": "Mottu.Api",
-        "projectPath": "/Users/gabrielteodoro/Dotnet/Mottu.Api/Mottu.Api.csproj",
-        "packagesPath": "/Users/gabrielteodoro/.nuget/packages/",
-        "outputPath": "/Users/gabrielteodoro/Dotnet/Mottu.Api/obj/",
+        "projectPath": "C:\\Users\\Felipe\\Downloads\\projeto_final_sprint4_final\\projeto_final_sprint4\\Mottu.Api\\Mottu.Api.csproj",
+        "packagesPath": "C:\\Users\\Felipe\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Felipe\\Downloads\\projeto_final_sprint4_final\\projeto_final_sprint4\\Mottu.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/gabrielteodoro/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Felipe\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -37,7 +37,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -47,19 +48,35 @@
               "target": "Package",
               "version": "[12.0.1, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.20, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.9, )"
+              "version": "[9.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
+            "Microsoft.ML": {
+              "target": "Package",
+              "version": "[4.0.3, )"
             },
             "Oracle.EntityFrameworkCore": {
               "target": "Package",
@@ -68,6 +85,14 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.14.0, )"
             }
           },
           "imports": [
@@ -81,6 +106,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[8.0.16, 8.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -89,7 +132,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.414/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
